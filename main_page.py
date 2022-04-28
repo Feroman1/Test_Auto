@@ -1,16 +1,12 @@
-# This is a sample Python script.
+from .base_page import BasePage
+from selenium.webdriver.common.by import By
+from .locators import MainPageLocators
+from .login_page import LoginPage
 
-# Press Shift+F10 to execute it or replace it with your code.
-# Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
-
-
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press Ctrl+F8 to toggle the breakpoint.
-
-
-# Press the green button in the gutter to run the script.
-if __name__ == '__main__':
-    print_hi('PyCharm')
-
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
+class MainPage(BasePage):
+    def go_to_login_page(self):
+        login_link = self.browser.find_element(*MainPageLocators.LOGIN_LINK)
+        login_link.click()
+        return LoginPage(browser=self.browser, url=self.browser.current_url)
+    def should_be_login_link(self):
+        assert self.is_element_present(*MainPageLocators.LOGIN_LINK), "Login link is not presented"
